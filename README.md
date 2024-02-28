@@ -24,7 +24,7 @@ FeuilleDeMatchApp is a Windows Forms application designed to automate the proces
 
 ## Installation
 
-1. Download the latest release of FeuilleDeMatchApp from the [releases page](https://github.com/yourusername/FeuilleDeMatchApp/releases).
+1. Download the latest release of FeuilleDeMatchApp from the [releases page](https://github.com/rafdy-rayan/Feuille-De-Match/releases).
 2. Extract the downloaded ZIP file to a location on your computer.
 3. Run the `FeuilleDeMatchApp.exe` file to launch the application.
 
