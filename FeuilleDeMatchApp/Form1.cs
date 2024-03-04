@@ -229,7 +229,7 @@ namespace FeuilleDeMatchApp
                         if (!string.IsNullOrEmpty(line))
                         {
                             string[] parts = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            parts = parts.Where(part => part != "Oui" && part != "IN" && part != "OUT").ToArray();
+                            parts = parts.Where(part => part != "Oui" && part != "IN" && part != "OUT" && part!= "(C)").ToArray();
                             if (parts.Length > 4 && parts.Length < 14)
                             {
                                 string playerName = string.Join(" ", parts.SkipWhile(part => !Regex.IsMatch(part, "[a-zA-Z]")).TakeWhile(part => !Regex.IsMatch(part, @"\d")));
