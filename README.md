@@ -34,7 +34,7 @@ Download the latest `FeuilleDeMatchApp.exe` of FeuilleDeMatchApp from the [relea
 
 ## Contributing
 
-Contributions to FeuilleDeMatchApp are welcome! If you encounter any bugs, have feature requests, or would like to contribute code improvements, please feel free to [open an issue](https://github.com/yourusername/FeuilleDeMatchApp/issues) or submit a pull request.
+Contributions to FeuilleDeMatchApp are welcome! If you encounter any bugs, have feature requests, or would like to contribute code improvements, please feel free to [open an issue](https://github.com/rafdy-rayan/Feuille-De-Match/issues) or submit a pull request.
 
 ## License
 
