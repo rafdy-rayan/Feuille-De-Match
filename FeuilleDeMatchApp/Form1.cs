@@ -34,8 +34,8 @@ namespace FeuilleDeMatchApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Dictionary<(string, string), List<string>> playerAttendance = new Dictionary<(string, string), List<string>>();
-            List<string> allGameDates = new List<string>();
+            Dictionary<(string, string), List<DateTime>> playerAttendance = new Dictionary<(string name, string category), List<DateTime>>();
+            List<DateTime> allGameDates = new List<DateTime>();
             clubName = clubNameTextBox.Text;
             try
             {
@@ -59,8 +59,14 @@ namespace FeuilleDeMatchApp
                                     if (pageText.Contains($"Club A: {clubName}") || pageText.Contains($"Club B: {clubName}"))
                                     {
                                         foundClubName = true;
-                                        string gameDate = ExtractGameDate(pageText);
-                                        if (!string.IsNullOrEmpty(gameDate) && !allGameDates.Contains(gameDate))
+                                        string[] formats = { "dd/MM/yyyy", "yyyy-MM-dd" };
+                                        DateTime gameDate = DateTime.ParseExact(
+                                            ExtractGameDate(pageText), 
+                                            formats, 
+                                            System.Globalization.CultureInfo.InvariantCulture, 
+                                            System.Globalization.DateTimeStyles.None);
+
+                                        if (!allGameDates.Contains(gameDate))
                                         {
                                             allGameDates.Add(gameDate);
                                         }
@@ -83,6 +89,7 @@ namespace FeuilleDeMatchApp
 
                 if (playerAttendance.Count > 0)
                 {
+                    allGameDates.Sort();
                     CreateExcelFile(allGameDates, playerAttendance);
                     messageBox.Text += ($"Excel file generated successfully.\n Location: {folderPath}\\Attendance.xlsx");
                 }
@@ -98,7 +105,7 @@ namespace FeuilleDeMatchApp
         }
 
 
-        static void CreateExcelFile(List<string> allGameDates, Dictionary<(string, string), List<string>> playerAttendance)
+        static void CreateExcelFile(List<DateTime> allGameDates, Dictionary<(string, string), List<DateTime>> playerAttendance)
         {
             try
             {
@@ -121,7 +128,7 @@ namespace FeuilleDeMatchApp
                     int col = 5;
                     foreach (var gameDate in allGameDates)
                     {
-                        worksheet.Cells[1, col].Value = gameDate;
+                        worksheet.Cells[1, col].Value = gameDate.ToShortDateString();
                         col++;
                     }
                     worksheet.Cells[1, lastCol].Value = "Occurrences"; // Add column for occurrences
@@ -199,7 +206,7 @@ namespace FeuilleDeMatchApp
             }
         }
 
-        static void ExtractPlayerDetails(Dictionary<(string, string), List<string>> playerAttendance, string text, string gameDate)
+        static void ExtractPlayerDetails(Dictionary<(string, string), List<DateTime>> playerAttendance, string text, DateTime gameDate)
         {
             try
             {
@@ -244,7 +251,7 @@ namespace FeuilleDeMatchApp
                                 var key = ($"{playerName}|{licenseNumber ?? ""}|{birthdate ?? ""}", category);
                                 if (!playerAttendance.ContainsKey(key))
                                 {
-                                    playerAttendance.Add(key, new List<string>());
+                                    playerAttendance.Add(key, new List<DateTime>());
                                 }
                                 playerAttendance[key].Add(gameDate);
                             }
